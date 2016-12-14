@@ -10,8 +10,19 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-//Route::resource('/user', 'UserController');
-Route::get('/user/all', [
-		'uses' => 'UserController@all',
-		'as' => 'user.all',
-	])->middleware('auth');
+
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/user/all', [
+        'uses' => 'UserController@all',
+        'as' => 'user.all',
+    ]);
+    Route::get('/user/create', [
+        'uses' => 'UserController@create',
+        'as' => 'user.create',
+    ]);
+    Route::post('user/create', [
+        'uses' => 'UserController@store',
+        'as' => 'user.create',
+    ]);
+});

@@ -25,4 +25,8 @@ Route::group(['middleware' => 'auth'], function() {
         'uses' => 'UserController@store',
         'as' => 'user.create',
     ]);
+    Route::delete('user/{id}', [
+        'uses' => 'UserController@destroy',
+        'as' => 'user.delete'
+    ]);
 });

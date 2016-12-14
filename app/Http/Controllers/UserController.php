@@ -27,14 +27,6 @@ class UserController extends Controller
     }
 
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -47,14 +39,9 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
         ]);
-        return redirect()->route('user.create', ['status' => 'Success']);
+        return redirect()->route('user.create');
     }
 
-
-    public function show($id)
-    {
-        //
-    }
 
 
     public function edit($id)
@@ -71,7 +58,12 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        //
+        $user = User::id($id);
+        if ($user) {
+            $user->delete();
+            return redirect()->route('user.all');
+        }
+            echo 'Not found';
     }
     public function all() {
         $users = User::get();

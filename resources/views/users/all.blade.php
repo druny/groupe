@@ -57,10 +57,16 @@
                                 <p>{{ $user->cellphone }}</p>
                             </td>
                             <td>
-                                <a href="">Delete </a>
-                                /
-                                <a href=""> Update</a>
+                                <form classs="col-xs-12" action="{{ route('user.delete', $user->id) }}" method="post" >
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <button class="btn btn-danger" type="submit">
+                                        Delete
+                                    </button>
+                                </form>
+                                <a class="btn btn-success col-xs-12" href=""> Update</a>
                             </td>
+
                         </tr>
                         @endforeach
                     </table>

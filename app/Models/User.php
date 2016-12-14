@@ -22,5 +22,8 @@ class User extends Authenticatable
     public function groups() {
         return $this->belongsToMany('App\Models\Group');
     }
-    
+    public function scopeId($query, $id) {
+
+        return $query->where('id', $id)->firstOrFail();
+    }
 }

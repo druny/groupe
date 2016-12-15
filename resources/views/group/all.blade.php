@@ -17,54 +17,41 @@
                                 <p>Name</p>
                             </th>
                             <th>
-                                <p>Second Name</p>
+                                <p>Role</p>
                             </th>
                             <th>
-                                <p>E-mail</p>
+                                <p>Description</p>
                             </th>
-                            <th>
-                                <p>Phone</p>
-                            </th>
-                            <th>
-                                <p>Cellphone</p>
-                            </th>
-                            <th>
-                                <p></p>
-                            </th>
-                        </tr>
-                        @foreach ($users as $user)
+                         <th></th>
+                        @foreach ($groups as $group)
                         <tr>
                             <td>
                                 <p>
-                                    {{ $user->id }}
+                                    {{ $group->id }}
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    {{ $user->name }}
+                                    {{ $group->name }}
                                 </p>
                             </td>
                             <td>
-                                <p>{{ $user->second_name }}</p>
+                                <p>{{ $group->role }}</p>
                             </td>
                             <td>
-                                <p>{{ $user->email }}</p>
+                                <p>{{ $group->description }}</p>
                             </td>
+
                             <td>
-                                <p>{{ $user->phone }}</p>
-                            </td>
-                            <td>
-                                <p>{{ $user->cellphone }}</p>
-                            </td>
-                            <td>
-                                <form classs="col-xs-12" action="{{ route('user.delete', $user->id) }}" method="post" >
+                                <form classs="" action="{{ route('group.delete', $group->id) }}" method="post" >
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button class="btn btn-danger" type="submit">
+                                    <button class="btn btn-danger col-xs-12" type="submit" >
                                         Delete
                                     </button>
                                 </form>
-                                <a class="btn btn-success col-xs-12" href=""> Update</a>
+                                <a class="btn btn-success col-xs-12" href="{{ route('group.edit', $group->id) }}"> Update</a>
+                                <a class="btn btn-warning col-xs-12" href="{{ route('group.users', $group->id) }}">Show Users</a>
                             </td>
 
                         </tr>

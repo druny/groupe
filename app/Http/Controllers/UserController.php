@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Group;
 use Illuminate\Support\Facades\DB;
 use RegistersUsers;
 
@@ -11,19 +12,21 @@ use RegistersUsers;
 class UserController extends Controller
 {
 
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     public function index()
     {
         $users = User::get();
-        return view('users.all', ['users' => $users]);
+        return view('user.all', ['users' => $users]);
         
     }
 
 
     public function create()
     {
-        return view('users.create');
+
+        $groups = Group::all();
+        return view('user.create', ['groups' => $groups]);
     }
 
 
@@ -34,11 +37,13 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|',
         ]);
-        User::create([
+        $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
         ]);
+        $user->groups()->attach($request['group']);
+
         return redirect()->route('user.create');
     }
 
@@ -46,13 +51,37 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        //
+        $user = User::id($id);
+        $groups = Group::all();
+        $group = $user->groups;
+        return view('user.update', [
+            'user' => $user,
+            'groups' => $groups,
+
+        ]);
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+       $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users,id,' . $id,
+            'password' => 'min:6|',
+
+        ]);
+
+        $user = User::id($id);
+        $user->name = $request['name'];
+        $user->second_name = $request['second_name'];
+        $user->email = $request['email'];
+        $user->phone = $request['phone'];
+        $user->cellphone = $request['cellphone'];
+        $user->password =  bcrypt($request['password']);
+        $user->groups()->attach($request['group']);
+        $user->save();
+
+        return redirect()->route('user.edit', $id);
     }
 
 
@@ -60,6 +89,7 @@ class UserController extends Controller
     {
         $user = User::id($id);
         if ($user) {
+            $user->groups()->detach();
             $user->delete();
             return redirect()->route('user.all');
         }
@@ -67,7 +97,7 @@ class UserController extends Controller
     }
     public function all() {
         $users = User::get();
-        return view('users.all', ['users' => $users]);
+        return view('user.all', ['users' => $users]);
       
     }
 

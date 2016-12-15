@@ -37,6 +37,15 @@
                                 Password:
                                 <input type="password" name="password" required>
                             </label>
+                            <label for="">
+                                Group:
+                                <select name="group" >
+                                    
+                                    @foreach($groups as $group)
+                                        <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                    @endforeach
+                                </select>
+                            </label>
                             <input type="submit" value="Send">
                         </form>
 

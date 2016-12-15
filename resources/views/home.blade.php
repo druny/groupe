@@ -9,6 +9,8 @@
 
                 <div class="panel-body">
                     <a href="{{ route('user.all') }}">Users</a>
+                    <br>
+                    <a href="{{ route('group.all') }}">Groups</a>
                 </div>
             </div>
         </div>

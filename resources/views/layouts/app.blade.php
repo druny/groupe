@@ -60,9 +60,11 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ route('user.all')  }}">All</a>
+                                        <a href="{{ route('group.all')  }}">All</a>
                                     </li>
-
+                                    <li>
+                                        <a href="{{ route('group.create')  }}">Create</a>
+                                    </li>
 
                                 </ul>
                             </li>

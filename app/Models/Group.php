@@ -15,7 +15,8 @@ class Group extends Model
     public function users() {
         return $this->belongsToMany('App\Models\User');
     }
-    public function scopeId(Builder $query, $id) {
+    public function scopeId($query, $id) {
         return $query->where('id', $id)->firstOrFail();
     }
+
 }
